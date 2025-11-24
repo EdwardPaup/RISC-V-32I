@@ -1,3 +1,4 @@
+import risc_v_32i::*;
 module registers 
 {
     input clk, write_enable;
@@ -9,8 +10,8 @@ module registers
 logic [REG_SIZE-1 : 0]register [REG_SIZE-1 : 0];
 
 always(@*) begin
-    assign rs1_read = (rs1_addr == 0) ? 0 : register[rs1_addr];
-    assign rs2_read = (rs2_addr == 0) ? 0 : register[rs2_addr];
+    rs1_read = (rs1_addr == 0) ? 0 : register[rs1_addr];
+    rs2_read = (rs2_addr == 0) ? 0 : register[rs2_addr];
 end
 
 alwaysff (@posedge clk) begin
