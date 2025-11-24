@@ -1,6 +1,7 @@
 package risc_v_32i;
 
-//iverilog -g2012 -o my_simulation_executable risc_v_32I.sv alu.sv comparator.sv
+//iverilog -g2012 -o main risc_v_32I.sv alu.sv comparator.sv inst_mem.sv registers.sv
+//git push -u RISC-V-32I main --force
 
 parameter REG_SIZE = 32;
 parameter REG_WIDTH = 5;

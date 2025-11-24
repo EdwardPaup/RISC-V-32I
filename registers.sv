@@ -1,20 +1,27 @@
 import risc_v_32i::*;
 module registers 
-{
-    input clk, write_enable;
-    input [REG_WIDTH-1 : 0] rs1_addr, rs2_addr, write_addr;
+(
+    input clk, write_enable,
+    input [REG_WIDTH-1 : 0] rs1_addr, rs2_addr, write_addr,
     input [REG_SIZE-1 : 0] write_data,
-    output [REG_SIZE-1 : 0] rs1_read, rs2_read;
-}
+    output reg [REG_SIZE-1 : 0] rs1_read, rs2_read
+);
 
-logic [REG_SIZE-1 : 0]register [REG_SIZE-1 : 0];
+logic [REG_SIZE-1 : 0]register [31 : 0];
 
-always(@*) begin
-    rs1_read = (rs1_addr == 0) ? 0 : register[rs1_addr];
-    rs2_read = (rs2_addr == 0) ? 0 : register[rs2_addr];
+always_comb begin
+    if (rs1_addr == 0)
+        rs1_read = 0;
+    else
+        rs1_read = register[rs1_addr];
+
+    if (rs2_addr == 0)
+        rs2_read = 0;
+    else
+        rs2_read = register[rs2_addr];
 end
 
-alwaysff (@posedge clk) begin
+always_ff @(posedge clk) begin
     if(write_enable && (write_addr != 0)) 
     begin 
         register[write_addr] = write_data;
@@ -22,4 +29,3 @@ alwaysff (@posedge clk) begin
 end
 
 endmodule
-    
